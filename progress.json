@@ -16,5 +16,11 @@
     "difficulty": "medium",
     "date": "20260729",
     "folder": "permutation-in-string-medium-20260729"
+  },
+  "longest-consecutive-sequence-medium-20260729": {
+    "problem": "longest-consecutive-sequence",
+    "difficulty": "medium",
+    "date": "20260729",
+    "folder": "longest-consecutive-sequence-medium-20260729"
   }
 }
