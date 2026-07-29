@@ -34,7 +34,36 @@ Constraints:
 1 <= nums.length <= 50000
 1 <= nums[i] <= 10^5
 1 <= k <= nums.length
-
 """
 
 # My Solution
+class Solution:
+    def numberOfSubarrays(self, nums: List[int], k: int) -> int:
+        
+        def helperFunction(k):
+            if k < 0:
+                return 0
+
+            left , right , count , windowSum = 0 , 0 , 0 , 0 
+
+            while right < len(nums):
+
+                windowSum += nums[right] % 2
+
+                while windowSum > k:
+
+                    windowSum -= nums[left]  % 2
+
+                    left +=1
+                
+
+
+                count = count +( right - left + 1)
+
+                right +=1
+
+            
+            return count
+
+        
+        return helperFunction(k) - helperFunction(k-1)
