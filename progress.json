@@ -4,5 +4,11 @@
     "difficulty": "medium",
     "date": "20260728",
     "folder": "1248-count-number-of-nice-subarrays-medium-20260728"
+  },
+  "reverse-linked-list-easy-20260729": {
+    "problem": "reverse-linked-list",
+    "difficulty": "easy",
+    "date": "20260729",
+    "folder": "reverse-linked-list-easy-20260729"
   }
 }
