@@ -10,5 +10,11 @@
     "difficulty": "easy",
     "date": "20260729",
     "folder": "reverse-linked-list-easy-20260729"
+  },
+  "permutation-in-string-medium-20260729": {
+    "problem": "permutation-in-string",
+    "difficulty": "medium",
+    "date": "20260729",
+    "folder": "permutation-in-string-medium-20260729"
   }
 }
