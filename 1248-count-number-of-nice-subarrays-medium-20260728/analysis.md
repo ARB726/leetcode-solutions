@@ -37,169 +37,183 @@ Constraints:
 1 <= k <= nums.length
 
 ## Problem Analysis
-**Problem Analysis: Count Number of Nice Subarrays**
+### Problem Analysis
 
-### Problem Type
-The problem can be classified as an **array** problem with a hint of **prefix sum** and **sliding window**.
+**Problem Type:** Array, Prefix Sum, Hash Table
 
-### Constraints and Edge Cases
+**Constraints and Edge Cases:**
 
-* `1 <= nums.length <= 50000`
-* `1 <= nums[i] <= 10^5`
-* `1 <= k <= nums.length`
-* The array may contain only even or only odd numbers.
-* The array may not contain enough odd numbers to form a nice subarray.
+* `nums` length: 1 to 50,000
+* `nums[i]` value: 1 to 10^5
+* `k` value: 1 to `nums.length`
+* Edge cases:
+	+ Empty array (already ruled out by the constraints)
+	+ `k` larger than the number of odd elements in the array
+	+ `k` equal to the number of odd elements in the array
 
-### Inputs and Outputs
+**Inputs and Outputs:**
 
-* **Input**: An array of integers `nums` and an integer `k`.
-* **Output**: The number of nice sub-arrays, where a nice subarray has exactly `k` odd numbers.
+* Input: `nums` array and integer `k`
+* Output: Number of nice sub-arrays with `k` odd numbers
 
-### Suggested Data Structures
+**Best Data Structures to Use:**
 
-* **Prefix sum array**: To keep track of the cumulative count of odd numbers.
-* **HashMap**: To store the frequency of prefix sums and calculate the number of nice sub-arrays.
+* Prefix sum array to keep track of the cumulative count of odd numbers
+* Hash table (e.g., unordered map) to store the count of prefix sums modulo a certain value
+* Array to store the input `nums` and prefix sums
 
-The time complexity of this approach would be O(n), where n is the length of the input array.
+This problem can be solved using a prefix sum array and a hash table, with a time complexity of O(n) and space complexity of O(n), where n is the length of the input array `nums`.
 
 ## Code Review
-### Code Review
+**Code Review**
 
-#### Bug or Logical Errors
-The given solution seems to have a logical error in calculating the number of nice sub-arrays. The current implementation tries to calculate the number of sub-arrays with at most `k` odd numbers, but it does not correctly calculate the number of sub-arrays with exactly `k` odd numbers.
+### Bug and Logical Errors
 
-The `helperFunction(k)` calculates the number of sub-arrays with at most `k` odd numbers, which includes sub-arrays with less than `k` odd numbers. To get the number of sub-arrays with exactly `k` odd numbers, we need to calculate the number of sub-arrays with at most `k` odd numbers and subtract the number of sub-arrays with at most `k-1` odd numbers.
+The code provided is almost correct but it can be improved. However, there is a logical error in the given solution. 
 
-However, the current implementation subtracts `helperFunction(k-1)` from `helperFunction(k)`, which is not entirely correct because `helperFunction(k-1)` includes sub-arrays with less than `k-1` odd numbers, not just `k-1` or less.
+The current code does not correctly calculate the number of sub-arrays with `k` odd numbers. It seems to calculate the number of sub-arrays with at most `k` odd numbers instead.
 
-To fix this, we should modify the solution to correctly calculate the number of sub-arrays with exactly `k` odd numbers.
+### Time Complexity (Big O)
 
-#### Time Complexity
-The time complexity of the given solution is O(n), where n is the length of the input array. This is because we use a single pass through the array to calculate the prefix sum.
+The time complexity of the given solution is O(n), where n is the length of the input array `nums`. This is because the code iterates over the input array once.
 
-However, we make two passes through the array in the `helperFunction` calls, so the overall time complexity is O(n) + O(n) = O(2n), which simplifies to O(n).
+### Space Complexity (Big O)
 
-#### Space Complexity
-The space complexity of the given solution is O(1), not considering the input array. This is because we only use a constant amount of space to store variables.
+The space complexity of the given solution is O(1), as it only uses a constant amount of space to store the variables `left`, `right`, `count`, and `windowSum`.
 
-#### Edge Cases
-The given solution does not correctly handle the edge case where the array does not contain enough odd numbers to form a nice subarray. In this case, the solution should return 0.
+### Edge Cases
 
-#### Code Readability and Style
-The given solution has some issues with code readability and style:
+The code does not handle the edge case when `k` is larger than the number of odd numbers in the array. However, this is already ruled out by the problem constraints.
 
-*   The variable names are not descriptive. For example, `count`, `windowSum`, `left`, and `right` could be renamed to something more descriptive like `niceSubarrayCount`, `oddNumberCount`, `leftPointer`, and `rightPointer`.
-*   The code could be formatted more consistently. For example, there should be a space between the `while` keyword and the condition.
-*   The `helperFunction` could be renamed to something more descriptive like `calculateNiceSubarrayCount`.
+### Code Readability and Style
 
-### Suggested Solution
-Here's a revised version of the solution with the above issues addressed:
+The code is generally well-structured and easy to read. However, there are some improvements that can be made:
 
+* The variable names `left`, `right`, `count`, and `windowSum` could be more descriptive.
+* The code could benefit from more comments to explain the logic behind the solution.
+* The function `helperFunction` could be renamed to something more descriptive.
+
+### Improved Solution
+
+Here is an improved solution that uses a prefix sum array and a hash table:
 ```python
 class Solution:
     def numberOfSubarrays(self, nums: List[int], k: int) -> int:
-        def at_most_k(k):
-            if k < 0:
-                return 0
+        # Create a prefix sum array to store the cumulative count of odd numbers
+        prefix_sum = [0] * (len(nums) + 1)
+        
+        # Calculate the prefix sum array
+        for i in range(len(nums)):
+            prefix_sum[i + 1] = prefix_sum[i] + (nums[i] % 2)
+        
+        # Initialize a hash table to store the count of prefix sums
+        count = {0: 1}
+        
+        # Initialize the result
+        res = 0
+        
+        # Iterate over the prefix sum array
+        for i in range(1, len(prefix_sum)):
+            # Calculate the target prefix sum
+            target = prefix_sum[i] - k
             
-            left = 0
-            odd_count = 0
-            count = 0
+            # If the target prefix sum is in the hash table, add the count to the result
+            if target in count:
+                res += count[target]
             
-            for right in range(len(nums)):
-                if nums[right] % 2 == 1:
-                    odd_count += 1
-                
-                while odd_count > k:
-                    if nums[left] % 2 == 1:
-                        odd_count -= 1
-                    left += 1
-                
-                count += right - left + 1
-            
-            return count
-
-        return at_most_k(k) - at_most_k(k - 1)
+            # Increment the count of the current prefix sum
+            count[prefix_sum[i]] = count.get(prefix_sum[i], 0) + 1
+        
+        # Return the result
+        return res
 ```
+This solution has a time complexity of O(n) and a space complexity of O(n), where n is the length of the input array `nums`. It correctly calculates the number of sub-arrays with `k` odd numbers. 
 
-In this revised solution, I've renamed the `helperFunction` to `at_most_k` to make it more descriptive. I've also renamed the variables to make them more descriptive.
-
-I've kept the overall structure of the solution the same, but I've made the code more consistent and readable. I've also added comments to explain what the code is doing.
-
-Note that this solution still has a time complexity of O(n) and a space complexity of O(1), but it correctly calculates the number of nice sub-arrays with exactly `k` odd numbers.
+### Explanation of Changed Solution
+- The new solution first creates a prefix sum array of odd numbers, `prefix_sum`.
+- It then iterates over `prefix_sum`, and for each prefix sum at index `i`, it calculates the target prefix sum by subtracting `k` from the current prefix sum.
+- It checks if the target prefix sum exists in the `count` hash table. If it does, it adds the count to the result `res`, because it has found a sub-array with exactly `k` odd numbers ending at index `i`.
+- Finally, it increments the count of the current prefix sum in the `count` hash table.
+- The time complexity of this solution is O(n), where n is the length of `nums`. This is because it makes one pass through `nums` to calculate `prefix_sum`, and another pass through `prefix_sum` to calculate `res`.
+- The space complexity of this solution is also O(n), because in the worst case, every prefix sum in `prefix_sum` could be unique, which would require O(n) space to store in the `count` hash table.
 
 ## Optimized Solution
-**Optimized Solution:**
-The original solution uses a helper function to count the number of subarrays with exactly `k` or `k-1` odd numbers and then returns the difference between these two counts. However, this approach can be optimized using a HashMap to store the frequency of prefix sums.
+### Optimized Solution
+The original solution has a time complexity of O(n) for the `helperFunction` but is called twice, resulting in a time complexity of O(2n) which simplifies to O(n). This is already quite efficient. However, the code can be improved for clarity and conciseness.
 
+Here is a refactored version of the solution:
 ```python
 from typing import List
 
 class Solution:
     def numberOfSubarrays(self, nums: List[int], k: int) -> int:
-        count = {0: 1}  # Initialize a HashMap to store the frequency of prefix sums
-        current_sum = 0  # Initialize the current sum
-        total_count = 0  # Initialize the total count of nice subarrays
-
-        for num in nums:
-            current_sum += num % 2  # Update the current sum by adding the parity of the current number
-            if current_sum - k in count:  # Check if the current sum minus k is in the HashMap
-                total_count += count[current_sum - k]  # Update the total count
-            count[current_sum] = count.get(current_sum, 0) + 1  # Update the frequency of the current sum
-
-        return total_count
+        def at_most(k):
+            if k < 0:
+                return 0
+            
+            left, count = 0, 0
+            window_sum = 0
+            
+            for right in range(len(nums)):
+                window_sum += nums[right] % 2
+                
+                while window_sum > k:
+                    window_sum -= nums[left] % 2
+                    left += 1
+                
+                count += right - left + 1
+            
+            return count
+        
+        return at_most(k) - at_most(k - 1)
 ```
 
-**Explanation:**
-The optimized solution uses a HashMap to store the frequency of prefix sums. It initializes a HashMap `count` with a single entry `{0: 1}`, representing the fact that the prefix sum is 0 at the beginning of the array. It also initializes two variables: `current_sum` to keep track of the cumulative count of odd numbers and `total_count` to store the total count of nice subarrays.
+### Explanation
+This solution uses a modified version of the `helperFunction`, now called `at_most`, which calculates the number of subarrays that contain at most `k` odd numbers.
 
-The algorithm then iterates over the input array `nums`. For each number, it updates the `current_sum` by adding the parity of the current number (i.e., `num % 2`). It then checks if the `current_sum` minus `k` is in the HashMap `count`. If it is, it updates the `total_count` by adding the frequency of the `current_sum` minus `k`. Finally, it updates the frequency of the `current_sum` in the HashMap `count`.
+The `at_most` function uses a sliding window approach, maintaining a `window_sum` of the number of odd numbers within the current window. When `window_sum` exceeds `k`, it slides the window to the right by incrementing the `left` pointer.
 
-**Time and Space Complexity:**
-The time complexity of the optimized solution is O(n), where n is the length of the input array. This is because the algorithm iterates over the input array once.
+The number of subarrays that contain exactly `k` odd numbers is then calculated by subtracting the number of subarrays that contain at most `k-1` odd numbers from the number of subarrays that contain at most `k` odd numbers.
 
-The space complexity of the optimized solution is O(n), where n is the length of the input array. This is because in the worst-case scenario, the HashMap `count` may store n entries.
+### Time and Space Complexity
+* Time complexity: O(n)
+* Space complexity: O(1), excluding the input array `nums`
 
-**Walkthrough:**
-Let's walk through the optimized solution with an example input `nums = [1, 1, 2, 1, 1]` and `k = 3`.
+### Step-by-Step Walkthrough
 
-1. Initialize the HashMap `count` with `{0: 1}` and set `current_sum` to 0 and `total_count` to 0.
-2. Iterate over the input array:
-	* `num = 1`, `current_sum = 1`, `count = {0: 1, 1: 1}`, `total_count = 0`.
-	* `num = 1`, `current_sum = 2`, `count = {0: 1, 1: 1, 2: 1}`, `total_count = 0`.
-	* `num = 2`, `current_sum = 2`, `count = {0: 1, 1: 1, 2: 2}`, `total_count = 0`.
-	* `num = 1`, `current_sum = 3`, `count = {0: 1, 1: 1, 2: 2, 3: 1}`, `total_count = 1` (because `current_sum - k = 0` is in `count`).
-	* `num = 1`, `current_sum = 4`, `count = {0: 1, 1: 1, 2: 2, 3: 1, 4: 1}`, `total_count = 2` (because `current_sum - k = 1` is in `count`).
-3. Return the `total_count`, which is 2.
+1. Define the `at_most` function, which calculates the number of subarrays that contain at most `k` odd numbers.
+2. Initialize the `left` pointer, `count` variable, and `window_sum` variable.
+3. Iterate over the input array `nums` using the `right` pointer.
+4. For each element, increment `window_sum` by the parity of the current element (1 if odd, 0 if even).
+5. If `window_sum` exceeds `k`, slide the window to the right by incrementing the `left` pointer and decrementing `window_sum` by the parity of the element at the `left` index.
+6. Increment `count` by the number of subarrays that end at the current `right` index and have at most `k` odd numbers.
+7. Return the total count of subarrays that contain at most `k` odd numbers.
+8. Calculate the number of subarrays that contain exactly `k` odd numbers by subtracting the result of `at_most(k-1)` from `at_most(k)`.
 
-The optimized solution correctly counts the number of nice subarrays in the input array.
+The original solution is already optimal in terms of time complexity. This refactored version improves code clarity and conciseness while maintaining the same time complexity.
 
 ## Lesson & Pattern
-Let's break it down.
+Let's break this down together.
 
-### Core Algorithmic Pattern: 
-The core algorithmic pattern in this problem is the ** Prefix Sum + Hash Map, but more accurately, it's the At-Most-K (or At-Least-K) pattern combined with a Sliding Window**. 
+### Core Algorithmic Pattern: Prefix Sum and Sliding Window
+The core pattern here is the combination of **Prefix Sum** and **Sliding Window**. The Prefix Sum technique is used to calculate the cumulative count of odd numbers, and the Sliding Window technique is used to find the number of sub-arrays with a certain property (in this case, exactly `k` odd numbers).
 
-### Why This Pattern Fits This Problem:
-This pattern fits this problem because we're essentially looking for subarrays that have exactly `k` odd numbers. By using a prefix sum array to keep track of the cumulative count of odd numbers, we can efficiently calculate the number of nice sub-arrays. The At-Most-K (or At-Least-K) pattern is useful when we need to find a subarray that meets a certain condition (in this case, having `k` odd numbers).
+### Why this pattern fits this problem
+This pattern fits this problem because it allows us to efficiently calculate the number of sub-arrays with `k` odd numbers. The Prefix Sum technique gives us a way to keep track of the cumulative count of odd numbers, and the Sliding Window technique allows us to slide a window over the array and count the number of sub-arrays that satisfy the condition. This approach reduces the time complexity from O(n^2) to O(n), making it much more efficient for large inputs.
 
-### Similar LeetCode Problems:
-Here are three similar LeetCode problems that use the same pattern:
+### Similar LeetCode Problems
+Here are 3 similar LeetCode problems that use the same pattern:
 
-1. **1371. Find the Longest Substring Containing Vowels in Even Counts**: This problem requires finding the longest substring that contains vowels in even counts. The At-Most-K pattern can be used to solve this problem.
-2. **930. Binary Subarrays With Sum**: This problem requires finding the number of binary subarrays with a given sum. The At-Most-K pattern can be used to solve this problem.
-3. **974. Subarray Sums Divisible by K**: This problem requires finding the number of subarrays whose sum is divisible by `k`. The At-Most-K pattern can be used to solve this problem, with a slight modification.
+1. **LeetCode 560: Subarray Sum Equals K** - This problem also uses the Prefix Sum and Sliding Window techniques to find the number of sub-arrays with a certain sum.
+2. **LeetCode 974: Subarray Sums Divisible by K** - This problem uses a similar approach to find the number of sub-arrays with sums divisible by `k`.
+3. **LeetCode 904: Fruit Into Baskets** - This problem uses a sliding window approach to find the maximum number of fruits that can be collected with at most two different types.
 
-### Simple Mental Framework:
-To recognize this pattern in future problems, ask yourself these questions:
+### Mental Framework to Recognize this Pattern
+Here's a simple mental framework to recognize this pattern:
 
-* Are we looking for a subarray that meets a certain condition?
-* Can we use a prefix sum array to keep track of the cumulative count of something (e.g., odd numbers, vowels, etc.)?
-* Can we use a sliding window to efficiently calculate the number of subarrays that meet the condition?
+* **Look for problems that involve sub-arrays or sub-strings** - If a problem involves finding the number of sub-arrays or sub-strings with certain properties, it may be a good candidate for the Prefix Sum and Sliding Window techniques.
+* **Identify the property that needs to be maintained** - In this case, the property is the count of odd numbers. Identify what property needs to be maintained or calculated, and think about how you can use a prefix sum or sliding window to achieve this.
+* **Consider using a hash table or prefix sum array** - If the problem involves counting or keeping track of certain values, a hash table or prefix sum array may be a good data structure to use.
 
-If you answered "yes" to these questions, you might be dealing with an At-Most-K (or At-Least-K) pattern problem.
-
-### Key Takeaway:
-One key takeaway from this problem is that **the prefix sum array can be used to efficiently calculate the number of subarrays that meet a certain condition**. This is a powerful technique that can be applied to a wide range of problems. Remember to always consider using a prefix sum array when dealing with subarray problems. 
-
-In your solution, the key insight is to calculate the number of subarrays with at most `k` odd numbers and subtract the number of subarrays with at most `k-1` odd numbers to get the number of subarrays with exactly `k` odd numbers. This is a clever application of the At-Most-K pattern.
+### Key Takeaway
+One key takeaway from this problem is that **combining multiple techniques can lead to more efficient solutions**. In this case, combining the Prefix Sum and Sliding Window techniques led to a much more efficient solution than using either technique alone. This is a good thing to keep in mind when solving problems - don't be afraid to combine different techniques to achieve a better solution!
