@@ -28,5 +28,11 @@
     "difficulty": "easy",
     "date": "20260730",
     "folder": "reverse-linked-list-easy-20260730"
+  },
+  "reorder-linked-list-medium-20260730": {
+    "problem": "reorder-linked-list",
+    "difficulty": "medium",
+    "date": "20260730",
+    "folder": "reorder-linked-list-medium-20260730"
   }
 }
