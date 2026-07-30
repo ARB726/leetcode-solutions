@@ -22,5 +22,11 @@
     "difficulty": "medium",
     "date": "20260729",
     "folder": "longest-consecutive-sequence-medium-20260729"
+  },
+  "reverse-linked-list-easy-20260730": {
+    "problem": "reverse-linked-list",
+    "difficulty": "easy",
+    "date": "20260730",
+    "folder": "reverse-linked-list-easy-20260730"
   }
 }
