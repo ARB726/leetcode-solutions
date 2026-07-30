@@ -34,5 +34,11 @@
     "difficulty": "medium",
     "date": "20260730",
     "folder": "reorder-linked-list-medium-20260730"
+  },
+  "integer--4-unknown-20260730": {
+    "problem": "integer--4",
+    "difficulty": "unknown",
+    "date": "20260730",
+    "folder": "integer--4-unknown-20260730"
   }
 }
