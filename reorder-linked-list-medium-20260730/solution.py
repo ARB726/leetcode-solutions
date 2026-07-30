@@ -121,19 +121,26 @@ class Solution:
         print(fast.val)
 
         prev = None
-        current = slow
+        current = slow.next
 
-        while slow and slow.next:
+        while current.next:
             Next = slow.next
-            slow.next = prev
-            prev = slow
-            slow = Next
+            current.next = prev
+            prev = current
+            current = Next
 
 
-        while dummy.next:
+        firstHalf = dummy.next
+        secondHalf = prev
 
-            dummy.next.next= slow
-            
+        while secondHalf:
+
+            firstHalfNext = firstHalf.next
+            secondHalfNext = secondHalf.next
+            firstHalf.next = secondHalf
+            secondHalf.next = firstHalfNext
+            firstHalf = firstHalfNext
+            secondHalf = secondHalfNext
 
 
 
