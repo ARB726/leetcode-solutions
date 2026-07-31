@@ -40,5 +40,11 @@
     "difficulty": "unknown",
     "date": "20260730",
     "folder": "integer--4-unknown-20260730"
+  },
+  "subarray-sum-equals-k-medium-20260731": {
+    "problem": "subarray-sum-equals-k",
+    "difficulty": "medium",
+    "date": "20260731",
+    "folder": "subarray-sum-equals-k-medium-20260731"
   }
 }
