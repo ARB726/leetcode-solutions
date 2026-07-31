@@ -46,5 +46,11 @@
     "difficulty": "medium",
     "date": "20260731",
     "folder": "subarray-sum-equals-k-medium-20260731"
+  },
+  "input-an-array-of-integers-nums-and-an-integer-targetoutput-the-indices-of-the-two-numbers-such-that-they-add-up-to-the-targetexample-if-nums--2-7-11-15-and-target--9-the-answer-is-0-1-because-nums0--nums1--2--7--9-unknown-20260731": {
+    "problem": "input-an-array-of-integers-nums-and-an-integer-targetoutput-the-indices-of-the-two-numbers-such-that-they-add-up-to-the-targetexample-if-nums--2-7-11-15-and-target--9-the-answer-is-0-1-because-nums0--nums1--2--7--9",
+    "difficulty": "unknown",
+    "date": "20260731",
+    "folder": "input-an-array-of-integers-nums-and-an-integer-targetoutput-the-indices-of-the-two-numbers-such-that-they-add-up-to-the-targetexample-if-nums--2-7-11-15-and-target--9-the-answer-is-0-1-because-nums0--nums1--2--7--9-unknown-20260731"
   }
 }
