@@ -58,5 +58,11 @@
     "difficulty": "medium",
     "date": "20260801",
     "folder": "minimum-size-subarray-sum-medium-20260801"
+  },
+  "189-rotate-array-medium-20260802": {
+    "problem": "189-rotate-array",
+    "difficulty": "medium",
+    "date": "20260802",
+    "folder": "189-rotate-array-medium-20260802"
   }
 }
