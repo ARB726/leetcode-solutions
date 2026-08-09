@@ -70,5 +70,11 @@
     "difficulty": "easy",
     "date": "20260809",
     "folder": "maximum-depth-of-binary-tree-easy-20260809"
+  },
+  "590-nary-tree-postorder-traversal-easy-20260809": {
+    "problem": "590-nary-tree-postorder-traversal",
+    "difficulty": "easy",
+    "date": "20260809",
+    "folder": "590-nary-tree-postorder-traversal-easy-20260809"
   }
 }
