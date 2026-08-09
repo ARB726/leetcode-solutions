@@ -64,5 +64,11 @@
     "difficulty": "medium",
     "date": "20260802",
     "folder": "189-rotate-array-medium-20260802"
+  },
+  "maximum-depth-of-binary-tree-easy-20260809": {
+    "problem": "maximum-depth-of-binary-tree",
+    "difficulty": "easy",
+    "date": "20260809",
+    "folder": "maximum-depth-of-binary-tree-easy-20260809"
   }
 }
