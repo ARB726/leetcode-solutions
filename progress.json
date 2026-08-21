@@ -76,5 +76,11 @@
     "difficulty": "easy",
     "date": "20260809",
     "folder": "590-nary-tree-postorder-traversal-easy-20260809"
+  },
+  "contains-duplicate-easy-20260821": {
+    "problem": "contains-duplicate",
+    "difficulty": "easy",
+    "date": "20260821",
+    "folder": "contains-duplicate-easy-20260821"
   }
 }
