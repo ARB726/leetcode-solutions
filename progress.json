@@ -82,5 +82,11 @@
     "difficulty": "easy",
     "date": "20260821",
     "folder": "contains-duplicate-easy-20260821"
+  },
+  "find-the-duplicate-number-medium-20260824": {
+    "problem": "find-the-duplicate-number",
+    "difficulty": "medium",
+    "date": "20260824",
+    "folder": "find-the-duplicate-number-medium-20260824"
   }
 }
