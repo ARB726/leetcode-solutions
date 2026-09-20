@@ -94,5 +94,11 @@
     "difficulty": "easy",
     "date": "20260918",
     "folder": "219-contains-duplicate-ii-easy-20260918"
+  },
+  "3498-reverse-degree-of-a-string-unknown-20260920": {
+    "problem": "3498-reverse-degree-of-a-string",
+    "difficulty": "unknown",
+    "date": "20260920",
+    "folder": "3498-reverse-degree-of-a-string-unknown-20260920"
   }
 }
