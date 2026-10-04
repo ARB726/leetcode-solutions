@@ -100,5 +100,11 @@
     "difficulty": "unknown",
     "date": "20260920",
     "folder": "3498-reverse-degree-of-a-string-unknown-20260920"
+  },
+  "219-contains-duplicate-ii-easy-20261004": {
+    "problem": "219-contains-duplicate-ii",
+    "difficulty": "easy",
+    "date": "20261004",
+    "folder": "219-contains-duplicate-ii-easy-20261004"
   }
 }
